@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Stack Match</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- Screen: Login -->
+        <div id="screen-login" class="screen active">
+            <div class="glass-panel">
+                <h1 class="title">Stack Match</h1>
+                <input type="text" id="username" class="input-field" placeholder="Username" maxlength="12">
+                <div id="login-error" class="error-msg"></div>
+                <button class="btn" id="btn-login">Entra</button>
+            </div>
+        </div>
+
+        <!-- Screen: Menu -->
+        <div id="screen-menu" class="screen">
+            <div class="glass-panel">
+                <h1 class="title">Scegli Modalità</h1>
+                <button class="btn" id="btn-cpu">GIOCA CONTRO IL COMPUTER</button>
+                <button class="btn" id="btn-create-room">CREA STANZA (ONLINE)</button>
+                <div style="display:flex; gap:10px; margin-top:10px;">
+                    <input type="text" id="room-code-input" class="input-field" placeholder="Codice" maxlength="3" style="margin-bottom:0; flex:1;">
+                    <button class="btn secondary" id="btn-join-room" style="margin-bottom:0; flex:1;">PARTECIPA</button>
+                </div>
+                <div id="menu-error" class="error-msg" style="margin-top:10px;"></div>
+            </div>
+        </div>
+
+        <!-- Screen: Game -->
+        <div id="screen-game" class="screen">
+            <div class="game-layout">
+                <div class="hud-top">
+                    <div class="player-info">
+                        <span class="player-name" id="p2-name">Avversario</span>
+                        <div class="cards-container" id="p2-cards">
+                            <div class="obj-card hidden-card"></div>
+                            <div class="obj-card hidden-card"></div>
+                        </div>
+                    </div>
+                    <div class="timer-box" id="timer-display">10</div>
+                </div>
+                
+                <div class="board-container">
+                    <div class="board" id="board">
+                        <svg id="arrows-svg"></svg>
+                    </div>
+                    <div class="action-bar" id="action-bar">
+                        <button class="action-btn" id="btn-cambia">Cambia Carta</button>
+                    </div>
+                </div>
+                
+                <div class="hud-bottom">
+                    <div class="player-info">
+                        <span class="player-name" id="p1-name">Tu</span>
+                        <div class="moves-box" id="moves-box">
+                            <div class="move-dot active"></div>
+                            <div class="move-dot active"></div>
+                        </div>
+                        <div class="cards-container" id="p1-cards">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="banner" id="game-over-banner">
+                <h2 id="winner-text">Hai Vinto!</h2>
+                <button class="btn" id="btn-back-menu">Torna al Menu</button>
+            </div>
+        </div>
+    </div>
+    
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>
