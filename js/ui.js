@@ -229,8 +229,8 @@ export function renderBoard() {
     let svgHtml = `<svg width="100%" height="100%">`;
     svgHtml += `
         <defs>
-            <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-                <polygon points="0 0, 10 3.5, 0 7" fill="#ffffff" />
+            <marker id="arrowhead" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                <polygon points="0 0, 8 3, 0 6" fill="rgba(255, 255, 255, 0.5)" />
             </marker>
         </defs>
     `;
@@ -251,7 +251,7 @@ export function renderBoard() {
         let dist = Math.sqrt(dx*dx + dy*dy);
         
         // Disks are 70px diameter (r=35px). We leave some padding for the arrowhead.
-        let padding = 42; 
+        let padding = 40; 
         
         if (dist > padding) {
             let pX = x1 + (dx / dist) * 35; // Start from edge of source disk
@@ -260,7 +260,7 @@ export function renderBoard() {
             let qY = y2 - (dy / dist) * padding;
             
             svgHtml += `
-                <path d="M ${pX} ${pY} L ${qX} ${qY}" stroke="#ffffff" stroke-width="4" fill="none" marker-end="url(#arrowhead)"/>
+                <path d="M ${pX} ${pY} L ${qX} ${qY}" stroke="rgba(255, 255, 255, 0.5)" stroke-width="1.5" fill="none" marker-end="url(#arrowhead)"/>
             `;
         }
     });
