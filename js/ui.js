@@ -230,7 +230,7 @@ export function renderBoard() {
     svgHtml += `
         <defs>
             <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-                <polygon points="0 0, 10 3.5, 0 7" fill="rgba(255, 255, 255, 0.6)" />
+                <polygon points="0 0, 10 3.5, 0 7" fill="#ffffff" />
             </marker>
         </defs>
     `;
@@ -259,14 +259,8 @@ export function renderBoard() {
             let qX = x2 - (dx / dist) * padding; // End a bit before target disk for arrowhead
             let qY = y2 - (dy / dist) * padding;
             
-            // Convert back to percentages for responsive SVG
-            let pxPct = (pX / boardWidth) * 100;
-            let pyPct = (pY / boardHeight) * 100;
-            let qxPct = (qX / boardWidth) * 100;
-            let qyPct = (qY / boardHeight) * 100;
-
             svgHtml += `
-                <path d="M ${pxPct}% ${pyPct}% L ${qxPct}% ${qyPct}%" stroke="rgba(255, 255, 255, 0.6)" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+                <path d="M ${pX} ${pY} L ${qX} ${qY}" stroke="#ffffff" stroke-width="4" fill="none" marker-end="url(#arrowhead)"/>
             `;
         }
     });
@@ -338,3 +332,10 @@ export function showGameOver(winnerId) {
     }
     document.getElementById('winner-text').innerText = text;
 }
+
+// Ensure board resizes correctly
+window.addEventListener('resize', () => {
+    if (document.getElementById('screen-game').classList.contains('active')) {
+        renderBoard();
+    }
+});
