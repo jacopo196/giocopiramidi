@@ -48,10 +48,10 @@ export function initGameData() {
     }
     
     state.board = [[],[],[],[],[],[],[]];
-    state.board[1] = piles[0];
-    state.board[2] = piles[1];
-    state.board[5] = piles[2];
-    state.board[6] = piles[3];
+    state.board[0] = piles[0];
+    state.board[1] = piles[1];
+    state.board[3] = piles[2];
+    state.board[5] = piles[3];
     
     state.turn = Math.random() < 0.5 ? 1 : 2;
     state.movesLeft = 2;

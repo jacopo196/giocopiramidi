@@ -219,12 +219,41 @@ export function renderBoard() {
             </marker>
         </defs>
     `;
+    let boardWidth = boardEl.clientWidth || 320;
+    let boardHeight = boardEl.clientHeight || 400;
+
     edges.forEach(e => {
         let n1 = nodes[e.from];
         let n2 = nodes[e.to];
-        svgHtml += `
-            <path d="M ${n1.x}% ${n1.y}% L ${n2.x}% ${n2.y}%" class="arrow-path" marker-end="url(#arrowhead)"/>
-        `;
+        
+        let x1 = (n1.x / 100) * boardWidth;
+        let y1 = (n1.y / 100) * boardHeight;
+        let x2 = (n2.x / 100) * boardWidth;
+        let y2 = (n2.y / 100) * boardHeight;
+        
+        let dx = x2 - x1;
+        let dy = y2 - y1;
+        let dist = Math.sqrt(dx*dx + dy*dy);
+        
+        // Disks are 70px diameter (r=35px). We leave some padding for the arrowhead.
+        let padding = 42; 
+        
+        if (dist > padding) {
+            let pX = x1 + (dx / dist) * 35; // Start from edge of source disk
+            let pY = y1 + (dy / dist) * 35;
+            let qX = x2 - (dx / dist) * padding; // End a bit before target disk for arrowhead
+            let qY = y2 - (dy / dist) * padding;
+            
+            // Convert back to percentages for responsive SVG
+            let pxPct = (pX / boardWidth) * 100;
+            let pyPct = (pY / boardHeight) * 100;
+            let qxPct = (qX / boardWidth) * 100;
+            let qyPct = (qY / boardHeight) * 100;
+
+            svgHtml += `
+                <path d="M ${pxPct}% ${pyPct}% L ${qxPct}% ${qyPct}%" class="arrow-path" marker-end="url(#arrowhead)"/>
+            `;
+        }
     });
     svg.innerHTML = svgHtml;
     

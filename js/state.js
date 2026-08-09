@@ -26,26 +26,26 @@ export const COLORS = ['red', 'blue', 'black', 'white'];
 export const SIZES = ['large', 'medium', 'small'];
 
 export const nodes = [
-    { id: 0, type: 'grey', x: 50, y: 50 },
-    { id: 1, type: 'white', x: 20, y: 15 },
-    { id: 2, type: 'white', x: 80, y: 15 },
-    { id: 3, type: 'grey', x: 20, y: 50 },
-    { id: 4, type: 'grey', x: 80, y: 50 },
-    { id: 5, type: 'white', x: 20, y: 85 },
-    { id: 6, type: 'white', x: 80, y: 85 }
+    { id: 0, type: 'white', x: 50, y: 50 }, // Center
+    { id: 1, type: 'white', x: 15, y: 50 }, // Left
+    { id: 2, type: 'grey', x: 32.5, y: 15 }, // Top-Left
+    { id: 3, type: 'white', x: 67.5, y: 15 }, // Top-Right
+    { id: 4, type: 'grey', x: 85, y: 50 }, // Right
+    { id: 5, type: 'white', x: 67.5, y: 85 }, // Bottom-Right
+    { id: 6, type: 'grey', x: 32.5, y: 85 } // Bottom-Left
 ];
 
 export const edges = [
+    // Outer circle (clockwise)
     { from: 1, to: 2 },
-    { from: 2, to: 4 },
-    { from: 4, to: 6 },
-    { from: 6, to: 5 },
-    { from: 5, to: 3 },
-    { from: 3, to: 1 },
-    { from: 1, to: 0 },
-    { from: 5, to: 0 },
-    { from: 4, to: 0 },
-    { from: 0, to: 2 },
-    { from: 0, to: 6 },
-    { from: 0, to: 3 }
+    { from: 2, to: 3 },
+    { from: 3, to: 4 },
+    { from: 4, to: 5 },
+    { from: 5, to: 6 },
+    { from: 6, to: 1 },
+    
+    // Inner connections (bidirectional between Center and Grey nodes)
+    { from: 0, to: 2 }, { from: 2, to: 0 },
+    { from: 0, to: 4 }, { from: 4, to: 0 },
+    { from: 0, to: 6 }, { from: 6, to: 0 }
 ];
