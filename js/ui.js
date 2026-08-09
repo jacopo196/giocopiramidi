@@ -207,15 +207,30 @@ function onSwapCardClick() {
 
 export function renderBoard() {
     let boardEl = document.getElementById('board');
-    let svg = document.getElementById('arrows-svg');
     
+    // Create or get SVG container to ensure cross-browser parsing (fixes iOS/Safari missing arrows)
+    let svgContainer = document.getElementById('svg-container');
+    if (!svgContainer) {
+        svgContainer = document.createElement('div');
+        svgContainer.id = 'svg-container';
+        svgContainer.style.position = 'absolute';
+        svgContainer.style.top = '0';
+        svgContainer.style.left = '0';
+        svgContainer.style.width = '100%';
+        svgContainer.style.height = '100%';
+        svgContainer.style.pointerEvents = 'none';
+        svgContainer.style.zIndex = '1';
+        boardEl.appendChild(svgContainer);
+    }
+    
+    // Clear old disks (but keep the container)
     boardEl.querySelectorAll('.disk').forEach(d => d.remove());
     
-    let svgHtml = '';
+    let svgHtml = `<svg width="100%" height="100%">`;
     svgHtml += `
         <defs>
             <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-                <polygon points="0 0, 10 3.5, 0 7" class="arrow-head" />
+                <polygon points="0 0, 10 3.5, 0 7" fill="rgba(255, 255, 255, 0.6)" />
             </marker>
         </defs>
     `;
@@ -251,11 +266,12 @@ export function renderBoard() {
             let qyPct = (qY / boardHeight) * 100;
 
             svgHtml += `
-                <path d="M ${pxPct}% ${pyPct}% L ${qxPct}% ${qyPct}%" class="arrow-path" marker-end="url(#arrowhead)"/>
+                <path d="M ${pxPct}% ${pyPct}% L ${qxPct}% ${qyPct}%" stroke="rgba(255, 255, 255, 0.6)" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
             `;
         }
     });
-    svg.innerHTML = svgHtml;
+    svgHtml += `</svg>`;
+    svgContainer.innerHTML = svgHtml;
     
     let validTargets = state.selectedNode !== null ? edges.filter(e => e.from === state.selectedNode).map(e => e.to) : [];
     
