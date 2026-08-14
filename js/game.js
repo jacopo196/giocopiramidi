@@ -283,35 +283,39 @@ function evaluateSim(simState) {
     const scorePartial = (cards, mult) => {
         let s = 0;
         for (let card of cards) {
+            let p1_ready = false;
+            let p2_ready = false;
+            
             for (let pile of simState.board) {
                 let n = pile.length;
-                if (n >= 2) {
-                    for (let i = 0; i <= n - 2; i++) {
-                        if (pile[i].color === card.color && pile[i].size === card.pieces[0] &&
-                            pile[i+1].color === card.color && pile[i+1].size === card.pieces[1]) {
-                            s += 20 * mult;
-                        }
-                        if (pile[i].color === card.color && pile[i].size === card.pieces[1] &&
-                            pile[i+1].color === card.color && pile[i+1].size === card.pieces[2]) {
-                            s += 15 * mult;
-                        }
-                    }
+                if (n === 0) continue;
+                
+                let top1 = pile[n - 1]; 
+                let top2 = n >= 2 ? pile[n - 2] : null; 
+                
+                if (n >= 2 && 
+                    top2.color === card.color && top2.size === card.pieces[0] &&
+                    top1.color === card.color && top1.size === card.pieces[1]) {
+                    s += 100 * mult;
                 }
-                if (n >= 1) {
-                    let top = pile[n - 1];
-                    if (top.color === card.color && top.size === card.pieces[0]) {
-                        s += 5 * mult;
-                    }
-                    if (top.color === card.color && top.size === card.pieces[2]) {
-                        s += 2 * mult;
-                    }
+                else if (top1.color === card.color && top1.size === card.pieces[0]) {
+                    s += 20 * mult;
+                }
+                
+                if (top1.color === card.color) {
+                    if (top1.size === card.pieces[1]) p1_ready = true;
+                    if (top1.size === card.pieces[2]) p2_ready = true;
                 }
             }
+            
+            if (p1_ready) s += 5 * mult;
+            if (p2_ready) s += 5 * mult;
         }
         return s;
     };
+    
     score += scorePartial(simState.p2Cards, 1);
-    score -= scorePartial(simState.p1Cards, 1.1); 
+    score -= scorePartial(simState.p1Cards, 1.2); 
     return score;
 }
 
