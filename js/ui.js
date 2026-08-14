@@ -4,14 +4,20 @@ import { initGameData, getSyncState, applySyncState, handleMovePiece, handleSwap
 export function setupUI() {
     document.getElementById('btn-login').addEventListener('click', onLogin);
     document.getElementById('btn-cpu').addEventListener('click', onCpuMode);
-    document.getElementById('btn-create-room').addEventListener('click', onCreateRoom);
+    document.getElementById('btn-create-room').addEventListener('click', onOnlineMode);
     document.getElementById('btn-join-room').addEventListener('click', onJoinRoom);
     document.getElementById('btn-cambia').addEventListener('click', onSwapCardClick);
     document.getElementById('btn-back-menu').addEventListener('click', () => {
         document.getElementById('game-over-banner').style.display = 'none';
         showScreen('screen-menu');
     });
+    document.getElementById('btn-start-game').addEventListener('click', onStartGameSettings);
+    document.getElementById('btn-back-settings').addEventListener('click', () => {
+        showScreen('screen-menu');
+    });
 }
+
+let pendingMode = '';
 
 export function showScreen(id) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -46,6 +52,30 @@ function onLogin() {
 }
 
 function onCpuMode() {
+    pendingMode = 'cpu';
+    document.getElementById('settings-difficulty').style.display = 'block';
+    showScreen('screen-settings');
+}
+
+function onOnlineMode() {
+    pendingMode = 'online';
+    document.getElementById('settings-difficulty').style.display = 'none';
+    showScreen('screen-settings');
+}
+
+function onStartGameSettings() {
+    let t = document.getElementById('select-time').value;
+    state.maxTime = t === 'infinite' ? 'infinite' : parseInt(t);
+    state.difficulty = document.getElementById('select-difficulty').value;
+    
+    if (pendingMode === 'cpu') {
+        startCpuMode();
+    } else if (pendingMode === 'online') {
+        onCreateRoom();
+    }
+}
+
+function startCpuMode() {
     state.mode = 'cpu';
     state.isHost = true;
     state.myPlayerId = 1;
@@ -147,7 +177,7 @@ function handleNetworkData(data) {
 }
 
 export function updateUI() {
-    document.getElementById('timer-display').innerText = state.timer;
+    document.getElementById('timer-display').innerText = state.timer === 'infinite' ? '∞' : state.timer;
     
     let isMyTurn = state.turn === state.myPlayerId;
     

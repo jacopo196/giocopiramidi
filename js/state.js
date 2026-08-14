@@ -9,6 +9,8 @@ export const state = {
     turn: 1, // 1 (Host/P1) or 2 (Guest/P2)
     movesLeft: 2,
     timer: 10,
+    maxTime: 10,
+    difficulty: 'hard',
     timerInterval: null,
     selectedNode: null,
     selectedCardIndex: null,

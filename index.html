@@ -34,6 +34,34 @@
             </div>
         </div>
 
+        <!-- Screen: Settings -->
+        <div id="screen-settings" class="screen">
+            <div class="glass-panel">
+                <h1 class="title">Impostazioni</h1>
+                
+                <div id="settings-difficulty" style="display:none; margin-bottom: 20px;">
+                    <h3 style="color: var(--text-main); margin-bottom: 10px; font-size: 1.1rem;">Difficoltà Computer</h3>
+                    <select id="select-difficulty" class="input-field" style="width: 100%;">
+                        <option value="easy">FACILE</option>
+                        <option value="medium">MEDIO</option>
+                        <option value="hard">DIFFICILE</option>
+                    </select>
+                </div>
+                
+                <div style="margin-bottom: 20px;">
+                    <h3 style="color: var(--text-main); margin-bottom: 10px; font-size: 1.1rem;">Tempo per Turno</h3>
+                    <select id="select-time" class="input-field" style="width: 100%;">
+                        <option value="10">10 Secondi</option>
+                        <option value="20">20 Secondi</option>
+                        <option value="infinite">Infinito</option>
+                    </select>
+                </div>
+                
+                <button class="btn" id="btn-start-game">Avvia Partita</button>
+                <button class="btn secondary" id="btn-back-settings" style="margin-top: 10px;">Indietro</button>
+            </div>
+        </div>
+
         <!-- Screen: Game -->
         <div id="screen-game" class="screen">
             <div class="game-layout">
